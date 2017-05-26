@@ -95,8 +95,15 @@ public class IRequest {
     }
 
 
+    /**
+     * 下载文件
+     * @param url
+     * @return
+     */
+    public static Request createDownloadRequest(String url){
+        return new Request.Builder().url(url).tag(url).build();
 
-
+    }
 
 
 

@@ -52,6 +52,24 @@ public class IOkHttpClient {
     }
 
 
+    /**
+     *
+     * @param request
+     * @param dataHandler
+     * @param path 文件下载保存的位置  不需要文件名
+     */
+    public static void downloadFile(final Request request,final String path,final DataHandler dataHandler){
+
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                client.newCall(request).enqueue(new DownloadCallBack(dataHandler,path,(String)request.tag()));
+
+            }
+        });
+    }
+
 
 
 }

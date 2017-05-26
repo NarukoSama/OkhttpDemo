@@ -52,6 +52,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static android.R.attr.tag;
+
 public class MainActivity extends Activity implements View.OnClickListener , IResponseListener{
 
 
@@ -331,22 +333,48 @@ public class MainActivity extends Activity implements View.OnClickListener , IRe
             public void run() {
 
                 try {
-                    OkHttpClient client = new OkHttpClient.Builder().build();
+//                    OkHttpClient client = new OkHttpClient.Builder().build();
+//
+//                    Request request = new Request.Builder().url("http://10.0.0.2:8080/Qhb/login").build();
+//
+//                    Response response =  client.newCall(request).execute();
+//
+//
+//                    System.out.println("response = " + response.body().string());
 
-                    Request request = new Request.Builder().url("http://10.0.0.2:8080/Qhb/login").build();
-
-                    Response response =  client.newCall(request).execute();
 
 
-                    System.out.println("response = " + response.body().string());
 
-                } catch (IOException e) {
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
         });
+        String path = "http://gdown.baidu.com/data/wisegame/0852f6d39ee2e213/QQ_676.apk" ;
 
+
+        final String local =  Environment.getExternalStorageDirectory() +"/aa/";
+        Toast.makeText(MainActivity.this, ""+local, Toast.LENGTH_SHORT).show();
+
+        IOkHttpClient.downloadFile(IRequest.createDownloadRequest(path),local,new DataHandler(new IResponseListener() {
+            @Override
+            public void onSuccess(Object response, String tag) {
+
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.fromFile(new File(local)),
+                        "application/vnd.android.package-archive");
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onFailed(Object failed, String tag) {
+
+            }
+        }));
 
 
     }
@@ -392,7 +420,7 @@ public class MainActivity extends Activity implements View.OnClickListener , IRe
         map.put("password","1");
         map.put("postkey","1503d");
 
-        IOkHttpClient.getAsyn(IRequest.createFileRequest(new RequestParams(map), "http://qhb.2dyt.com/Bwei/login"),new DataHandler(this));
+        IOkHttpClient.getAsyn(IRequest.createFileRequest(new RequestParams(map), "https://kyfw.12306.cn/otn/"),new DataHandler(this));
 
 
 

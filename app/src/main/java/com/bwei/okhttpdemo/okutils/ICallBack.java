@@ -7,6 +7,7 @@ import android.os.Message;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -24,18 +25,22 @@ public class ICallBack implements Callback {
     Handler handler ;
     String tag ;
 
+    // true 标示耗时操作 false非耗时操作
+    boolean type ;
+
     public ICallBack(DataHandler dataHandler,String tag){
         this.listener = dataHandler.listener ;
         this.clazz = dataHandler.clazz ;
         this.tag = tag;
-        handler = new Handler(Looper.getMainLooper());
-
+        this.handler = new Handler(Looper.getMainLooper());
+        this.type = type;
     }
 
     public ICallBack(IResponseListener listener,String tag){
         this.listener = listener ;
         this.tag = tag;
-        handler = new Handler(Looper.getMainLooper());
+        this.handler = new Handler(Looper.getMainLooper());
+        this.type = type;
     }
 
     @Override
@@ -55,6 +60,7 @@ public class ICallBack implements Callback {
 
     @Override
     public void onResponse(Call call, final Response response) throws IOException {
+
         handler.post(new Runnable() {
             @Override
             public void run() {
