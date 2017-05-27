@@ -363,8 +363,9 @@ public class MainActivity extends Activity implements View.OnClickListener , IRe
             public void onSuccess(Object response, String tag) {
 
 
+                //跳转到安装界面
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.fromFile(new File(local)),
+                intent.setDataAndType(Uri.fromFile(new File(tag)),
                         "application/vnd.android.package-archive");
                 startActivity(intent);
 

@@ -48,9 +48,10 @@ public class DownloadCallBack implements Callback {
         InputStream inputStream = null;
         FileOutputStream fileOutputStream = null;
         File file = null ;
+        final String [] arrays =  url.split("/");
+
         try {
 
-            String [] arrays =  url.split("/");
 
             inputStream = response.body().byteStream();
 
@@ -72,7 +73,6 @@ public class DownloadCallBack implements Callback {
 
             while ((len = inputStream.read(buff)) != -1) {
                 fileOutputStream.write(buff, 0, len);
-                System.out.println(" -------  ");
             }
             fileOutputStream.flush();
         } catch (Exception e) {
@@ -90,7 +90,8 @@ public class DownloadCallBack implements Callback {
                 @Override
                 public void run() {
 
-                    dataHandler.listener.onSuccess(response,"tag");
+//                    path+arrays[arrays.length-1] 本地文件的绝对路径
+                    dataHandler.listener.onSuccess(response,path+arrays[arrays.length-1]);
 
                 }
             }) ;
